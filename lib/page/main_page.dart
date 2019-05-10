@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gank_flutter/page/home_page.dart';
 
 /// 创建时间：2019/5/8
 ///作者：chenkang
@@ -10,12 +11,11 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  int _currentIndex = 0;
-  var titleList = ['主页','分类','妹子','我的'];
+  int _currentIndex;
+  var titleList = ['主页', '分类', '妹子', '我的'];
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _currentIndex = 0;
   }
@@ -25,7 +25,7 @@ class _MainPageState extends State<MainPage> {
     return MaterialApp(
       theme: ThemeData.light(),
       home: Scaffold(
-        body: Text('haha'),
+        body: HomePage(),
         bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
             fixedColor: Colors.lightBlue,
@@ -65,9 +65,6 @@ class _MainPageState extends State<MainPage> {
                     '我的',
                   )),
             ]),
-        appBar: AppBar(
-          title: Text(titleList[_currentIndex]),
-        ),
         floatingActionButton: FloatingActionButton(
           elevation: 5.0,
           tooltip: 'Increment',
