@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gank_flutter/page/home_page.dart';
+import 'package:gank_flutter/page/fun_read_page.dart';
+import 'package:gank_flutter/page/girl_page.dart';
+import 'package:gank_flutter/page/gank_page.dart';
+import 'package:gank_flutter/page/my_page.dart';
 
 /// 创建时间：2019/5/8
 ///作者：chenkang
@@ -13,6 +16,11 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _currentIndex;
   var titleList = ['主页', '分类', '妹子', '我的'];
+  List<Widget> pages = List<Widget>()
+    ..add(GankPage())
+    ..add(FunReadPage())
+    ..add(GirlPage())
+    ..add(MyPage());
 
   @override
   void initState() {
@@ -25,7 +33,7 @@ class _MainPageState extends State<MainPage> {
     return MaterialApp(
       theme: ThemeData.light(),
       home: Scaffold(
-        body: HomePage(),
+        body: pages[_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
             fixedColor: Colors.lightBlue,
@@ -41,14 +49,14 @@ class _MainPageState extends State<MainPage> {
                     Icons.home,
                   ),
                   title: Text(
-                    '主页',
+                    '干活',
                   )),
               BottomNavigationBarItem(
                   icon: Icon(
                     Icons.widgets,
                   ),
                   title: Text(
-                    '分类',
+                    '闲读',
                   )),
               BottomNavigationBarItem(
                   icon: Icon(
