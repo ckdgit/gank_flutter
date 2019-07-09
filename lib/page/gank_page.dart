@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 
 /// 创建时间：2019/5/8
 ///作者：chenkang
@@ -41,12 +42,22 @@ class _GankPageState extends State<GankPage>
                 Icon(Icons.search),
               ],
               flexibleSpace: FlexibleSpaceBar(
-                collapseMode: CollapseMode.parallax,
-                background: Image.asset(
-                  "assets/images/avatar.jpeg",
-                  fit: BoxFit.cover,
-                ),
-              ),
+                  collapseMode: CollapseMode.parallax,
+                  background: Swiper(
+                    autoplay: true,
+                    itemCount: 3,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Image.asset(
+                        'assets/images/avatar.jpeg',
+                        fit: BoxFit.cover,
+                      );
+                    },
+                  )
+//                Image.asset(
+//                  "assets/images/avatar.jpeg",
+//                  fit: BoxFit.cover,
+//                ),
+                  ),
               bottom: TabBar(
                   controller: _controller,
                   tabs: ['Android', 'ios', 'App']
