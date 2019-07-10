@@ -12,13 +12,13 @@ class GankPage extends StatefulWidget {
 
 class _GankPageState extends State<GankPage>
     with SingleTickerProviderStateMixin {
-  var _timer = new DateTime.now();
+  var _timer = DateTime.now();
   var _controller;
 
   @override
   void initState() {
     super.initState();
-    _controller = new TabController(length: 3, vsync: this);
+    _controller = TabController(length: 3, vsync: this);
   }
 
   @override
@@ -52,12 +52,7 @@ class _GankPageState extends State<GankPage>
                         fit: BoxFit.cover,
                       );
                     },
-                  )
-//                Image.asset(
-//                  "assets/images/avatar.jpeg",
-//                  fit: BoxFit.cover,
-//                ),
-                  ),
+                  )),
               bottom: TabBar(
                   controller: _controller,
                   tabs: ['Android', 'ios', 'App']
@@ -88,22 +83,14 @@ class _GankPageState extends State<GankPage>
               builder: (BuildContext context) =>
                   CustomScrollView(slivers: <Widget>[
                     SliverOverlapInjector(
-                      // This is the flip side of the SliverOverlapAbsorber above.
                       handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
                           context),
                     ),
-                    SliverFixedExtentList(
-                      itemExtent: 50.0,
-                      delegate: new SliverChildBuilderDelegate(
+                    SliverList(
+                      delegate: SliverChildBuilderDelegate(
                           (BuildContext context, int index) {
-                        //创建列表项
-                        return new Container(
-                          alignment: Alignment.center,
-                          color: Colors.lightBlue[100 * (index % 9)],
-                          child: new Text('list item $index'),
-                        );
-                      }, childCount: 50 //50个列表项
-                          ),
+                        return itemBuilder(index);
+                      }, childCount: 20),
                     ),
                   ]),
             );
@@ -128,6 +115,35 @@ class _GankPageState extends State<GankPage>
     setState(() {
       _timer = selectedDate;
     });
+  }
+
+  Widget itemBuilder(int index) {
+    return Card(
+      child: InkWell(
+        onTap: (){},
+        splashColor: Colors.blue.withAlpha(30),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(padding: EdgeInsets.only(top: 20.0)),
+            Row(
+              children: <Widget>[
+                Padding(padding: EdgeInsets.only(left: 20.0)),
+                Expanded(child: Text('$_timer')),
+                Text('20'),
+                Padding(
+                  padding: EdgeInsets.only(right: 20.0),
+                )
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left:20.0),
+              child: Text('这是一个测试的数据$index'),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 
