@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:gank_flutter/utils/date_covert_util.dart';
 
 /// 创建时间：2019/5/8
 ///作者：chenkang
@@ -23,47 +24,50 @@ class _GankPageState extends State<GankPage>
 
   @override
   Widget build(BuildContext context) {
-    return NestedScrollView(
-      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-        return <Widget>[
-          SliverOverlapAbsorber(
-            handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-            child: SliverAppBar(
-              elevation: 4.0,
-              pinned: true,
-              expandedHeight: 200,
-              title: GestureDetector(
-                child: Text('date$_timer'),
-                onTap: () {
-                  chooseDate(context);
-                },
+    return Container(
+      color: Colors.blueGrey[50],
+      child: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
+            SliverOverlapAbsorber(
+              handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+              child: SliverAppBar(
+                elevation: 4.0,
+                backgroundColor: Colors.blueGrey[400],
+                pinned: true,
+                expandedHeight: 200,
+                title: GestureDetector(
+                  child: Text('date$_timer'),
+                  onTap: () {
+                    chooseDate(context);
+                  },
+                ),
+                actions: <Widget>[
+                  Icon(Icons.search),
+                ],
+                flexibleSpace: FlexibleSpaceBar(
+                    collapseMode: CollapseMode.parallax,
+                    background: Swiper(
+                      autoplay: true,
+                      itemCount: 3,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Image.asset(
+                          'assets/images/avatar.jpeg',
+                          fit: BoxFit.cover,
+                        );
+                      },
+                    )),
+                bottom: TabBar(
+                    controller: _controller,
+                    tabs: ['Android', 'ios', 'App']
+                        .map((e) => Tab(
+                              text: e,
+                            ))
+                        .toList()),
               ),
-              actions: <Widget>[
-                Icon(Icons.search),
-              ],
-              flexibleSpace: FlexibleSpaceBar(
-                  collapseMode: CollapseMode.parallax,
-                  background: Swiper(
-                    autoplay: true,
-                    itemCount: 3,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Image.asset(
-                        'assets/images/avatar.jpeg',
-                        fit: BoxFit.cover,
-                      );
-                    },
-                  )),
-              bottom: TabBar(
-                  controller: _controller,
-                  tabs: ['Android', 'ios', 'App']
-                      .map((e) => Tab(
-                            text: e,
-                          ))
-                      .toList()),
             ),
-          ),
-        ];
-      },
+          ];
+        },
 //        SliverToBoxAdapter(
 //          child: Banner(
 //            message: 'haha',
@@ -76,25 +80,26 @@ class _GankPageState extends State<GankPage>
 //        SliverPadding(
 //          padding: EdgeInsets.only(top: 10),
 //        ),
-      body: TabBarView(
-          controller: _controller,
-          children: ['Android', 'ios', 'App'].map((e) {
-            return Builder(
-              builder: (BuildContext context) =>
-                  CustomScrollView(slivers: <Widget>[
-                    SliverOverlapInjector(
-                      handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
-                          context),
-                    ),
-                    SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                          (BuildContext context, int index) {
-                        return itemBuilder(index);
-                      }, childCount: 20),
-                    ),
-                  ]),
-            );
-          }).toList()),
+        body: TabBarView(
+            controller: _controller,
+            children: ['Android', 'ios', 'App'].map((e) {
+              return Builder(
+                builder: (BuildContext context) =>
+                    CustomScrollView(slivers: <Widget>[
+                  SliverOverlapInjector(
+                    handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+                        context),
+                  ),
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                      return itemBuilder(index);
+                    }, childCount: 20),
+                  ),
+                ]),
+              );
+            }).toList()),
+      ),
     );
   }
 
@@ -120,27 +125,47 @@ class _GankPageState extends State<GankPage>
   Widget itemBuilder(int index) {
     return Card(
       child: InkWell(
-        onTap: (){},
+        onTap: () {},
         splashColor: Colors.blue.withAlpha(30),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(padding: EdgeInsets.only(top: 20.0)),
-            Row(
-              children: <Widget>[
-                Padding(padding: EdgeInsets.only(left: 20.0)),
-                Expanded(child: Text('$_timer')),
-                Text('20'),
-                Padding(
-                  padding: EdgeInsets.only(right: 20.0),
-                )
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left:20.0),
-              child: Text('这是一个测试的数据$index'),
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(padding: EdgeInsets.only(top: 5.0)),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                      child: Text(
+                    '${DateCovert.timeToDate(_timer.toString(), 'yyyy-MM-dd HH:mm')}',
+                    style: TextStyle(color: Colors.black26),
+                  )),
+                  Text(
+                    '20',
+                    style: TextStyle(color: Colors.black26),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: Text(
+                  '这是一个测试的vvvvvvvvvvv到达vvvvvvvvvvvvvvvvvccccccccc数据$index',
+                  style: TextStyle(color: Colors.black, fontSize: 16),
+                ),
+              ),
+              Row(
+                children: <Widget>[
+                  Text('作者  '),
+                  Expanded(
+                      child: Text(
+                    '你大爷',
+                    style: TextStyle(),
+                  )),
+                  Text('github'),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
