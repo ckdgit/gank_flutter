@@ -118,7 +118,7 @@ class _GankPageState extends State<GankPage>
       },
     );
     setState(() {
-      _timer = selectedDate;
+      _timer = selectedDate ?? _timer;
     });
   }
 
